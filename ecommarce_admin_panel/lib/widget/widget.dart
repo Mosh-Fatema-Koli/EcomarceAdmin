@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-showInToast(String value) {
+showInToast(String value){
   Fluttertoast.showToast(
       msg: "$value",
       toastLength: Toast.LENGTH_SHORT,
@@ -9,5 +9,6 @@ showInToast(String value) {
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.black54,
       textColor: Colors.white,
-      fontSize: 16.0);
+      fontSize: 16.0
+  );
 }

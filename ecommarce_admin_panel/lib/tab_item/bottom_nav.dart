@@ -1,21 +1,20 @@
 import 'dart:io';
-
-import 'package:ecommarce_admin_panel/Screen/category_page.dart';
-import 'package:ecommarce_admin_panel/Screen/home.dart';
-import 'package:ecommarce_admin_panel/Screen/order_pase.dart';
-import 'package:ecommarce_admin_panel/Screen/product_page.dart';
-import 'package:ecommarce_admin_panel/Screen/profile.dart';
+import 'package:ecommarce_admin_panel/tab_item/category_page.dart';
+import 'package:ecommarce_admin_panel/tab_item/home_page.dart';
+import 'package:ecommarce_admin_panel/tab_item/order_page.dart';
+import 'package:ecommarce_admin_panel/tab_item/product_page.dart';
+import 'package:ecommarce_admin_panel/tab_item/profile_page.dart';
 import 'package:ecommarce_admin_panel/widget/brand_colors.dart';
 import 'package:flutter/material.dart';
 
-class NabBarPage extends StatefulWidget {
-  const NabBarPage({Key? key}) : super(key: key);
+class BottomNav extends StatefulWidget {
+  const BottomNav({Key? key}) : super(key: key);
 
   @override
-  State<NabBarPage> createState() => _NabBarPageState();
+  State<BottomNav> createState() => _BottomNavState();
 }
 
-class _NabBarPageState extends State<NabBarPage> {
+class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
 
   List<Widget> pages = [
@@ -45,7 +44,7 @@ class _NabBarPageState extends State<NabBarPage> {
               left: 30,
               right: 30,
             ),
-            backgroundColor: Color.fromARGB(255, 6, 22, 238),
+            backgroundColor: BrandColors.colorPrimaryDark,
             contentTextStyle: myStyle(
                 14, BrandColors.colorText.withOpacity(0.7), FontWeight.w400),
             titleTextStyle: myStyle(18, Colors.white, FontWeight.w500),
@@ -80,20 +79,72 @@ class _NabBarPageState extends State<NabBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            Container(
+              color: Colors.yellow,
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Mosh. Fatema Akhter Koli",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "Email: fatemakoli58@gmail.com",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      "Phone No: 01302607702",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text("Home"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text("Settings"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.contacts),
+              title: Text("Contact Us"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black87,
-          ),
-        ),
+        backgroundColor: Colors.yellow,
         actions: [
           Icon(
-            Icons.camera_alt_outlined,
-            color: Colors.black87,
+            Icons.logout,
+            color: Colors.white,
           ),
           SizedBox(
             width: 12,
@@ -108,7 +159,7 @@ class _NabBarPageState extends State<NabBarPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        selectedItemColor: Colors.orange,
+        selectedItemColor: Colors.yellow,
         unselectedItemColor: Colors.blueGrey,
         showUnselectedLabels: true,
         onTap: (index) {

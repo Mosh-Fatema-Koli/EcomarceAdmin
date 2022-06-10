@@ -1,24 +1,23 @@
 import 'dart:convert';
+import 'package:connectivity/connectivity.dart';
 import 'package:ecommarce_admin_panel/http/custom_http_request.dart';
 import 'package:ecommarce_admin_panel/widget/custom_TextField.dart';
 import 'package:ecommarce_admin_panel/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:http/http.dart' as http;
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class RegistationPage extends StatefulWidget {
+  const RegistationPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegistationPage> createState() => _RegistationPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegistationPageState extends State<RegistationPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-
   Future<bool> check() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -47,7 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             body: map,
             headers: CustomHttpRequest.defaultHeader);
-
         print("${responce.body}");
         final data = jsonDecode(responce.body);
         if (responce.statusCode == 201) {
@@ -64,6 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.yellow,
       appBar: AppBar(
         backgroundColor: Colors.yellow,
@@ -74,6 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       body: Container(
         margin: EdgeInsets.only(
+          top: 50,
           left: 20,
           right: 20,
         ),

@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-import 'package:ecommarce_admin_panel/Auth/register.dart';
-import 'package:ecommarce_admin_panel/Screen/navbar.dart';
+import 'package:ecommarce_admin_panel/screen/registation.dart';
+import 'package:ecommarce_admin_panel/tab_item/bottom_nav.dart';
 import 'package:ecommarce_admin_panel/widget/custom_TextField.dart';
 import 'package:ecommarce_admin_panel/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailcontroller = TextEditingController();
-  TextEditingController _Passwordcontroller = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   bool isLoading = false;
   SharedPreferences? sharedPreferences;
   String? token;
@@ -26,9 +26,9 @@ class _LoginPageState extends State<LoginPage> {
   isLogin() async {
     sharedPreferences = await SharedPreferences.getInstance();
     token = sharedPreferences!.getString("token");
-    if (token!.isNotEmpty) {
+    if (token != null) {
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => NabBarPage()));
+          MaterialPageRoute(builder: (context) => BottomNav()));
     } else {
       print("token is null");
     }
@@ -37,8 +37,8 @@ class _LoginPageState extends State<LoginPage> {
   getLogin() async {
     sharedPreferences = await SharedPreferences.getInstance();
     var map = Map<String, dynamic>();
-    map["email"] = _emailcontroller.text.toString();
-    map["password"] = _Passwordcontroller.text.toString();
+    map["email"] = emailController.text.toString();
+    map["password"] = passwordController.text.toString();
     var responce = await http.post(
       Uri.parse(loginLlink),
       body: map,
@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
       token = sharedPreferences!.getString("token");
       print("Token Saved $token");
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => NabBarPage()));
+          MaterialPageRoute(builder: (context) => BottomNav()));
       showInToast("Login Succesfull");
     } else {
       showInToast("Login Failed");
@@ -66,8 +66,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         leading: Icon(
@@ -89,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.yellow, borderRadius: BorderRadius.circular(20)),
         height: 400,
         child: Padding(
-          padding: const EdgeInsets.all(50),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               Text(
@@ -100,11 +102,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 25,
               ),
               CustomTextField(
-                controller: _emailcontroller,
+                controller: emailController,
                 hintText: "Enter your Email",
               ),
               CustomTextField(
-                controller: _Passwordcontroller,
+                controller: passwordController,
                 hintText: "Enter your password",
               ),
               SizedBox(
@@ -125,8 +127,10 @@ class _LoginPageState extends State<LoginPage> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistationPage()));
                 },
                 child: Text(
                   "Register",
